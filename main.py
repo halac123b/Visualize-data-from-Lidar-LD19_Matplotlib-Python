@@ -44,44 +44,63 @@ while True:
     if (i % 40 == 39):
         if ('line' in locals()):
             line.remove()
-        line = ax.scatter(angles, distances, c="pink", s=5)
 
+        # Vẽ biểu đồ scatter (biểu đồ dạng điểm)
+            # Thường biểu diễn tương quan giữa 2 giá trị, ở đây là góc + khoảng cách
+            # c: color, s: size of points
+        print(len(angles))
+        line = ax.scatter(angles, distances, c="blue", s=5)
+        # Set offset cho vị trí của góc 0 độ trong hệ tọa độ polar
+            # Với hệ tọa độ của Lidar, góc 0 độ ứng với trục 0y nên cần set offset pi / 2
         ax.set_theta_offset(math.pi / 2)
+        # Update Figure, hoặc delay 1 khoảng thời gian
         plt.pause(0.01)
+        # Clear tập giá trị
         angles.clear()
         distances.clear()
+
         i = 0
 
 
     while loopFlag:
+        # Đọc data từ Serial
         b = ser.read()
+        # Convert int từ byte đọc được
+            # big: byte order của chuỗi bit, các bit quan trọng nhất nằm ở đầu
         tmpInt = int.from_bytes(b, 'big')
 
+        # 0x54, indicating the beginning of the data packet (LD19 document)
         if (tmpInt == 0x54):
-            tmpString +=  b.hex() + " "
+            tmpString += b.hex() + " "
             flag2c = True
             continue
 
-        elif(tmpInt == 0x2c and flag2c):
+        # 0x2c: fixed value of VerLen (LD19 document)
+        elif (tmpInt == 0x2c and flag2c):
             tmpString += b.hex()
 
-            if(not len(tmpString[0:-5].replace(' ','')) == 90 ):
+
+            if (not len(tmpString[0:-5].replace(' ','')) == 90):
                 tmpString = ""
                 loopFlag = False
                 flag2c = False
                 continue
 
+            # Sau khi đọc full 1 gói data Lidar sẽ có kích thước = 90, lấy string và đưa vào hàm CalcLidarData()
             lidarData = CalcLidarData(tmpString[0:-5])
+            # Get giá trị của góc và distance
             angles.extend(lidarData.Angle_i)
             distances.extend(lidarData.Distance_i)
+
+            #print(distances)
 
             tmpString = ""
             loopFlag = False
         else:
-            tmpString += b.hex()+" "
+            tmpString += b.hex()+ " "
 
         flag2c = False
 
-    i +=1
+    i += 1
 
 ser.close()
