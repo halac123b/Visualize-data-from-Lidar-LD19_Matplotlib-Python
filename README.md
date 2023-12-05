@@ -1,6 +1,6 @@
-# LIDAR_LD06_python_loder
+# LIDAR_LD19_python_data_reader
 
-This code can use Lidar's LD06 (LDS06) provided by LDROBOT from Python. and It displays the acquired point cloud in real time in matplotlib.
+This code can use Lidar's LD19 provided by LDROBOT from Python. and It displays the acquired point cloud in real time in matplotlib.
 
 # How to use
 
@@ -9,6 +9,6 @@ This code can use Lidar's LD06 (LDS06) provided by LDROBOT from Python. and It d
 3. Run `python main.py`.
 4. Press the E key to exit.
 
-# About LD06(LDS06)
+# About LD19
 
-- Datasheet http://wiki.inno-maker.com/display/HOMEPAGE/LD06
+- Datasheet https://www.waveshare.com/wiki/DTOF_LIDAR_LD19
