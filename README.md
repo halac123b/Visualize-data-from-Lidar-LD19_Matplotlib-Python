@@ -12,3 +12,4 @@ This code can use Lidar's LD19 provided by LDROBOT from Python. and It displays 
 # About LD19
 
 - Datasheet https://www.waveshare.com/wiki/DTOF_LIDAR_LD19
+<!-- Thanks to repo from: https://github.com/henjin0/LIDAR_LD06_python_loder/tree/main -->
